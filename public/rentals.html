@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Urbanease | Quality Rentals</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <style>
+    .rental-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    .category-btn.active {
+      background-color: #4f46e5;
+      color: white;
+    }
+    .filter-btn.active {
+      background-color: #4f46e5;
+      color: white;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased">
+  <!-- Navigation -->
+  <nav class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <div class="flex-shrink-0 flex items-center">
+            <i data-feather="home" class="h-8 w-8 text-indigo-600"></i>
+            <span class="ml-2 text-xl font-bold text-gray-900">Urbanease</span>
+          </div>
+          <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+            <a href="index.html" class="text-gray-500 hover:text-gray-700 inline-flex items-center px-1 pt-1 text-sm font-medium">Home</a>
+            <a href="services.html" class="text-gray-500 hover:text-gray-700 inline-flex items-center px-1 pt-1 text-sm font-medium">Services</a>
+            <a href="rentals.html" class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Rentals</a>
+            <a href="about.html" class="text-gray-500 hover:text-gray-700 inline-flex items-center px-1 pt-1 text-sm font-medium">About</a>
+          </div>
+        </div>
+        <!-- Auth Buttons -->
+        <div id="authButtons" class="hidden sm:ml-6 sm:flex sm:items-center">
+          <button id="openSignin" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium">Sign In</button>
+          <button id="openSignup" class="ml-4 bg-white hover:bg-gray-50 text-indigo-600 border border-indigo-600 px-4 py-2 rounded-md text-sm font-medium">Sign Up</button>
+        </div>
+        <!-- User Menu -->
+        <div id="userMenu" class="hidden sm:ml-6 sm:flex sm:items-center space-x-4">
+          <span id="welcomeUser" class="text-gray-700 font-medium"></span>
+          <button id="logoutBtn" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium">Logout</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  
+    <!-- Rentals Hero -->
+    <div class="bg-indigo-700 text-white">
+        <div class="max-w-7xl mx-auto py-16 px-4 sm:py-20 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl" data-aos="fade-down">
+                    Quality Rentals
+                </h1>
+                <p class="mt-6 max-w-2xl text-xl mx-auto" data-aos="fade-down" data-aos-delay="100">
+                    Rent what you need, when you need it
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rentals Filter -->
+    <div class="bg-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                <div class="flex overflow-x-auto pb-4 space-x-2">
+                    <button class="category-btn flex-shrink-0 px-4 py-2 border border-gray-300 rounded-full text-sm font-medium hover:bg-gray-50 active">
+                        All Items
+                    </button>
+                    <button class="category-btn flex-shrink-0 px-4 py-2 border border-gray-300 rounded-full text-sm font-medium hover:bg-gray-50">
+                        Furniture
+                    </button>
+                    <button class="category-btn flex-shrink-0 px-4 py-2 border border-gray-300 rounded-full text-sm font-medium hover:bg-gray-50">
+                        Appliances
+                    </button>
+                    <button class="category-btn flex-shrink-0 px-4 py-2 border border-gray-300 rounded-full text-sm font-medium hover:bg-gray-50">
+                        Vehicles
+                    </button>
+                    <button class="category-btn flex-shrink-0 px-4 py-2 border border-gray-300 rounded-full text-sm font-medium hover:bg-gray-50">
+                        Spaces
+                    </button>
+                </div>
+                <div class="mt-4 md:mt-0">
+                    <div class="flex items-center">
+                        <span class="mr-2 text-sm text-gray-600">Sort by:</span>
+                        <select class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            <option>Popular</option>
+                            <option>Price: Low to High</option>
+                            <option>Price: High to Low</option>
+                            <option>Rating</option>
+                            <option>Distance</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rentals Grid -->
+    <div class="bg-gray-50 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                <!-- Rental 1 -->
+                <div class="rental-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300" data-aos="fade-up">
+                    <div class="h-48 bg-cover bg-center" style="background-image: url('sofa-set.jpg');"></div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-medium text-gray-900">Modern Sofa Set (3+2)</h3>
+                        <div class="mt-2 flex items-center">
+                            <div class="flex items-center">
+                                <i data-feather="star" class="h-4 w-4 text-yellow-400"></i>
+                                <span class="ml-1 text-sm text-gray-600">4.8 (24 reviews)</span>
+                            </div>
+                            <span class="ml-auto text-sm text-gray-500">2 km away</span>
+                        </div>
+                        <div class="mt-4 flex items-center justify-between">
+                            <span class="text-sm font-medium text-gray-900">₹899/day</span>
+                            <button class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Rent Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rental 2 -->
+                <div class="rental-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
+                    <div class="h-48 bg-cover bg-center" style="background-image: url('washing-machine.jpeg');"></div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-medium text-gray-900">Front Load Washing Machine</h3>
+                        <div class="mt-2 flex items-center">
+                            <div class="flex items-center">
+                                <i data-feather="star" class="h-4 w-4 text-yellow-400"></i>
+                                <span class="ml-1 text-sm text-gray-600">4.5 (18 reviews)</span>
+                            </div>
+                            <span class="ml-auto text-sm text-gray-500">1.5 km away</span>
+                        </div>
+                        <div class="mt-4 flex items-center justify-between">
+                            <span class="text-sm font-medium text-gray-900">₹499/day</span>
+                            <button class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Rent Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rental 3 -->
+                <div class="rental-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
+                    <div class="h-48 bg-cover bg-center" style="background-image: url('scooter.jpeg');"></div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-medium text-gray-900">Electric Scooter</h3>
+                        <div class="mt-2 flex items-center">
+                            <div class="flex items-center">
+                                <i data-feather="star" class="h-4 w-4 text-yellow-400"></i>
+                                <span class="ml-1 text-sm text-gray-600">4.9 (32 reviews)</span>
+                            </div>
+                            <span class="ml-auto text-sm text-gray-500">3 km away</span>
+                        </div>
+                        <div class="mt-4 flex items-center justify-between">
+                            <span class="text-sm font-medium text-gray-900">₹299/day</span>
+                            <button class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Rent Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rental 4 -->
+                <div class="rental-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300" data-aos="f fade-up" data-aos-delay="300">
+                    <div class="h-48 bg-cover bg-center" style="background-image: url('http://static.photos/workspace/640x360/4');"></div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-medium text-gray-900">Co-working Space (4 seats)</h3>
+                        <div class="mt-2 flex items-center">
+                            <div class="flex items-center">
+                                <i data-feather="star" class="h-4 w-4 text-yellow-400"></i>
+                                <span class="ml-1 text-sm text-gray-600">4.7 (28 reviews)</span>
+                            </div>
+                            <span class="ml-auto text-sm text-gray-500">0.5 km away</span>
+                        </div>
+                        <div class="mt-4 flex items-center justify-between">
+                            <span class="text-sm font-medium text-gray-900">₹1299/day</span>
+                            <button class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Rent Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rental 5 -->
+                <div class="rental-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300" data-aos="fade-up" data-aos-delay="400">
+                    <div class="h-48 bg-cover bg-center" style="background-image: url('bed.jpeg');"></div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-medium text-gray-900">Queen Size Bed with Mattress</h3>
+                        <div class="mt-2 flex items-center">
+                            <div class="flex items-center">
+                                <i data-feather="star" class="h-4 w-4 text-yellow-400"></i>
+                                <span class="ml-1 text-sm text-gray-600">4.6 (15 reviews)</span>
+                            </div>
+                            <span class="ml-auto text-sm text-gray-500">1.2 km away</span>
+                        </div>
+                        <div class="mt-4 flex items-center justify-between">
+                            <span class="text-sm font-medium text-gray-900">₹699/day</span>
+                            <button class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Rent Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rental 6 -->
+                <div class="rental-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300" data-aos="fade-up" data-aos-delay="500">
+                    <div class="h-48 bg-cover bg-center" style="background-image: url('tv.jpg');"></div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-medium text-gray-900">Smart TV (55")</h3>
+                        <div class="mt-2 flex items-center">
+                            <div class="flex items-center">
+                                <i data-feather="star" class="h-4 w-4 text-yellow-400"></i>
+                                <span class="ml-1 text-sm text-gray-600">4.8 (21 reviews)</span>
+                            </div>
+                            <span class="ml-auto text-sm text-gray-500">0.8 km away</span>
+                        </div>
+                        <div class="mt-4 flex items-center justify-between">
+                            <span class="text-sm font-medium text-gray-900">₹599/day</span>
+                            <button class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Rent Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-10 text-center">
+                <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Load More Rentals
+                    <i data-feather="plus" class="ml-2 h-4 w-4"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Benefits Section -->
+    <div class="bg-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl" data-aos="fade-up">
+                    Why Rent with Urbanease?
+                </h2>
+            </div>
+
+            <div class="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-3">
+                <!-- Benefit 1 -->
+                <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                        <i data-feather="shield" class="h-6 w-6"></i>
+                    </div>
+                    <h3 class="mt-4 text-lg font-medium text-gray-900">Verified Rentals</h3>
+                    <p class="mt-2 text-base text-gray-500">
+                        All items are inspected and verified for quality before listing.
+                    </p>
+                </div>
+
+                <!-- Benefit 2 -->
+                <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                        <i data-feather="dollar-sign" class="h-6 w-6"></i>
+                    </div>
+                    <h3 class="mt-4 text-lg font-medium text-gray-900">Affordable Rates</h3>
+                    <p class="mt-2 text-base text-gray-500">
+                        Pay only for the time you need the item, no long-term commitments.
+                    </p>
+                </div>
+
+                <!-- Benefit 3 -->
+                <div class="text-center" data-aos="fade-up" data-aos-delay="400">
+                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                        <i data-feather="truck" class="h-6 w-6"></i>
+                    </div>
+                    <h3 class="mt-4 text-lg font-medium text-gray-900">Delivery Options</h3>
+                    <p class="mt-2 text-base text-gray-500">
+                        Many items can be delivered to your location for convenience.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="bg-indigo-50 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl" data-aos="fade-up">
+                    Happy Renters
+                </h2>
+            </div>
+
+            <div class="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Testimonial 1 -->
+                <div class="bg-white p-6 rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <img class="h-10 w-10 rounded-full" src="http://static.photos/people/200x200/4" alt="">
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-sm font-medium text-gray-900">Neha Gupta</h4>
+                            <div class="flex mt-1">
+                                <i data-feather="star" class="h-4 w-4 text-yellow-400"></i>
+                                <i data-feather="star" class="h-4 w-4 text-yellow-400"></i>
+                                <i data-feather="star" class="h-4 w-4 text-yellow-400"></i>
+                                <i data-feather="star" class="h-4 w-4 text-yellow-400"></i>
+                                <i data-feather="star" class="h-4 w-4 text-yellow-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-600">
+                        "Rented a sofa set for my temporary apartment. The condition was perfect and delivery was prompt!"
+                    </p>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-white p-6 rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <img class="h-10 w-10 rounded-full" src="http://static.photos/people/200x200/5" alt="">
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-sm font-medium text-gray-900">Vikram Singh</h4>
+                            <div class="flex mt-1">
+                                <i data-feather="star" class="h-4 w-4 text-yellow-400"></i>
+                                <i data-feather="star" class="h-4 w-4 text-yellow-400"></i>
+                                <i data-feather="star" class="h-4 w-4 text-yellow-400"></i>
+                                <i data-feather="star" class="h-4 w-4 text-yellow-400"></i>
+                                <i data-feather="star" class="h-4 w-4 text-yellow-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-600">
+                        "The electric scooter was a lifesaver when my bike was in the shop. Great service!"
+                    </p>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-white p-6 rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="400">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <img class="h-10 w-10 rounded-full" src="http://static.photos/people/200x200/6" alt="">
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-sm font-medium text-gray-900">Ananya Reddy</h4>
+                            <div class="flex mt-1">
+                                <i data-feather="star" class="h-4 w-4 text-yellow-400"></i>
+                                <i data-feather="star" class="h-4 w-4 text-yellow-400"></i>
+                                <i data-feather="star" class="h-4 w-4 text-yellow-400"></i>
+                                <i data-feather="star" class="h-4 w-4 text-yellow-400"></i>
+                                <i data-feather="star" class="h-4 w-4 text-yellow-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-600">
+                        "Used Urbanease to rent a co-working space for a week. Perfect solution for my remote work needs."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Services</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Plumbing</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Cleaning</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">AC Repair</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Painting</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Rentals</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Furniture</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Appliances</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Vehicles</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Spaces</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Company</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">About</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Careers</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Press</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Support</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Help Center</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Safety</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Terms</a></li>
+                        <li><a href="#" class="text-base text-gray-300 hover:text-white">Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between">
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i data-feather="facebook" class="h-6 w-6"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i data-feather="instagram" class="h-6 w-6"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i data-feather="twitter" class="h-6 w-6"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i data-feather="linkedin" class="h-6 w-6"></i>
+                    </a>
+                </div>
+                <p class="mt-8 md:mt-0 text-base text-gray-400">
+                    &copy; 2025 Urbanease. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+<!-- Auth Modal -->
+  <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg w-full max-w-md p-6 relative shadow-lg">
+      <button id="closeModal" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+
+      <!-- Sign In -->
+      <div id="signinForm">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">Sign In</h2>
+        <form id="signin" class="space-y-4">
+          <input type="email" name="email" placeholder="Email" required class="w-full border rounded-md px-3 py-2">
+          <input type="password" name="password" placeholder="Password" required class="w-full border rounded-md px-3 py-2">
+          <button type="submit" class="w-full bg-indigo-600 text-white px-4 py-2 rounded-md">Sign In</button>
+        </form>
+        <p class="mt-4 text-sm text-gray-600">Don't have an account?
+          <button id="switchToSignup" class="text-indigo-600 hover:underline">Sign Up</button>
+        </p>
+      </div>
+
+      <!-- Sign Up -->
+      <div id="signupForm" class="hidden">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">Sign Up</h2>
+        <form id="signup" class="space-y-4">
+          <input type="text" name="name" placeholder="Name" required class="w-full border rounded-md px-3 py-2">
+          <input type="email" name="email" placeholder="Email" required class="w-full border rounded-md px-3 py-2">
+          <input type="password" name="password" placeholder="Password" required class="w-full border rounded-md px-3 py-2">
+          <button type="submit" class="w-full bg-indigo-600 text-white px-4 py-2 rounded-md">Sign Up</button>
+        </form>
+        <p class="mt-4 text-sm text-gray-600">Already have an account?
+          <button id="switchToSignin" class="text-indigo-600 hover:underline">Sign In</button>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+    feather.replace();
+
+    const modal = document.getElementById("authModal");
+    const signinForm = document.getElementById("signinForm");
+    const signupForm = document.getElementById("signupForm");
+
+    const authButtons = document.getElementById("authButtons");
+    const userMenu = document.getElementById("userMenu");
+    const welcomeUser = document.getElementById("welcomeUser");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    // Modal open/close
+    document.getElementById("openSignin").onclick = () => {
+      modal.classList.remove("hidden");
+      signinForm.classList.remove("hidden");
+      signupForm.classList.add("hidden");
+    };
+    document.getElementById("openSignup").onclick = () => {
+      modal.classList.remove("hidden");
+      signupForm.classList.remove("hidden");
+      signinForm.classList.add("hidden");
+    };
+    document.getElementById("closeModal").onclick = () => { modal.classList.add("hidden"); };
+    document.getElementById("switchToSignup").onclick = () => {
+      signinForm.classList.add("hidden");
+      signupForm.classList.remove("hidden");
+    };
+    document.getElementById("switchToSignin").onclick = () => {
+      signupForm.classList.add("hidden");
+      signinForm.classList.remove("hidden");
+    };
+
+    // Check auth state
+    function checkAuth() {
+      const token = localStorage.getItem("token");
+      const username = localStorage.getItem("username");
+      if (token) {
+        authButtons.classList.add("hidden");
+        userMenu.classList.remove("hidden");
+        welcomeUser.textContent = `👋 Hi, ${username || "User"}`;
+      } else {
+        authButtons.classList.remove("hidden");
+        userMenu.classList.add("hidden");
+      }
+    }
+
+    // Sign In
+    document.getElementById("signin").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = e.target.email.value;
+      const password = e.target.password.value;
+      try {
+        const res = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || "Login failed");
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("username", data.user?.name || email);
+        modal.classList.add("hidden");
+        checkAuth();
+      } catch (err) {
+        alert(err.message);
+      }
+    });
+
+    // Sign Up
+    document.getElementById("signup").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = e.target.name.value;
+      const email = e.target.email.value;
+      const password = e.target.password.value;
+      try {
+        const res = await fetch("/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, password }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || "Signup failed");
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("username", data.user?.name || name);
+        modal.classList.add("hidden");
+        checkAuth();
+      } catch (err) {
+        alert(err.message);
+      }
+    });
+
+    // Logout
+    logoutBtn.onclick = () => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("username");
+      checkAuth();
+    };
+
+    // Category button active state
+    document.querySelectorAll('.category-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Init
+    checkAuth();
+  </script>
+</body>
+</html>
